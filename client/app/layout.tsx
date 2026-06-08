@@ -19,6 +19,8 @@ export const metadata: Metadata = {
   description: "Property investment, Airbnb ROI mapping, and short-let operations platform.",
 };
 
+export const dynamic = "force-dynamic";
+
 export default function RootLayout({
   children,
 }: Readonly<{
