@@ -1,0 +1,41 @@
+# Dependencies
+node_modules/
+**/node_modules/
+
+# Environment secrets — NEVER commit these
+.env
+.env.local
+.env.*.local
+**/.env
+**/.env.local
+**/.env.*.local
+
+# Next.js build output
+**/.next/
+**/out/
+**/build/
+
+# Runtime auth store (password hashes / emails)
+**/auth-store.json
+
+# Logs
+*.log
+**/*.log
+
+# OS / editor
+.DS_Store
+*.pem
+.vercel
+*.tsbuildinfo
+
+# Office temp files
+~$*.docx
+
+# Local editor / agent settings
+.claude/
+
+# Internal planning docs & deliverables (contain business details — keep local only)
+PROJECT_STATUS.md
+GO-LIVE-CHECKLIST.md
+*.docx
+screenshots/

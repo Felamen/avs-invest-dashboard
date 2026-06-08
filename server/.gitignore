@@ -1,0 +1,24 @@
+# Dependencies
+node_modules/
+
+# Environment secrets — NEVER commit these
+.env
+.env.local
+.env.*.local
+
+# Logs
+*.log
+npm-debug.log*
+server.log
+server.err.log
+
+# Runtime
+.DS_Store
+*.pem
+
+# Data caches that shouldn't ship in source control
+data/geocodes.json
+data/*.cache.json
+
+# Runtime auth store (password hashes / emails) — never commit
+auth-store.json
