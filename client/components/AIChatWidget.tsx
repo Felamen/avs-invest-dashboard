@@ -209,29 +209,35 @@ export default function AIChatWidget({
 
       await consumeSse(res.body, (event) => {
         setMessages((prev) => {
-          const next = [...prev];
-          const last = next[next.length - 1];
+          const last = prev[prev.length - 1];
           if (!last || last.id !== assistantMsg.id) return prev;
+          // Immutable update: clone the message (and the arrays we touch) instead of
+          // mutating it in place. React StrictMode runs this updater twice in dev —
+          // mutating `last` doubled the streamed text. Cloning keeps it pure & idempotent.
+          const updated: Msg = {
+            ...last,
+            toolCalls: last.toolCalls.map((t) => ({ ...t })),
+            navigations: [...last.navigations],
+          };
           switch (event.type) {
             case "text": {
-              last.text += event.data.delta;
+              updated.text = last.text + event.data.delta;
               break;
             }
             case "tool_use_start": {
-              last.toolCalls.push({
-                id: event.data.id,
-                name: event.data.name,
-                status: "running",
-              });
+              updated.toolCalls = [
+                ...updated.toolCalls,
+                { id: event.data.id, name: event.data.name, status: "running" },
+              ];
               break;
             }
             case "tool_result": {
-              const tc = last.toolCalls.find((t) => t.id === event.data.id);
+              const tc = updated.toolCalls.find((t) => t.id === event.data.id);
               if (tc) {
                 tc.status = event.data.error ? "error" : "done";
                 if (event.data.result?.navigation) {
                   tc.navigation = event.data.result.navigation;
-                  last.navigations.push(event.data.result.navigation);
+                  updated.navigations = [...updated.navigations, event.data.result.navigation];
                 } else if (event.data.result && event.data.name) {
                   tc.preview = summariseResult(event.data.name, event.data.result);
                 }
@@ -243,7 +249,7 @@ export default function AIChatWidget({
               break;
             }
           }
-          return next;
+          return [...prev.slice(0, -1), updated];
         });
       });
     } catch (e) {
