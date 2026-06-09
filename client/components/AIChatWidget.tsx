@@ -354,17 +354,18 @@ export default function AIChatWidget({
                 Hey {currentUser?.name.split(" ")[0] || "there"} 👋 I&apos;m Fikermenpiken
               </div>
               <p className="text-sm text-slate-400 leading-relaxed">
-                Your AI business co-partner for AVS. I know your properties and pipeline, and I&apos;m here to
-                take the busywork off your plate — quick, sharp, and on your side.
+                Your AI co-partner for AVS — here for work <span className="text-slate-300">and</span> life. I know your
+                properties and pipeline, and I take the busywork off your plate. Just ask me in plain English — I&apos;ll
+                do it or walk you through it, step by step. Anything that needs setting up, I&apos;ll point you to Craig.
               </p>
             </div>
 
             <div className={`grid ${isPage ? "grid-cols-2" : "grid-cols-1"} gap-2 text-left`}>
               {[
-                { icon: "📣", t: "Ads", d: "Google & Facebook ad copy, keywords, targeting" },
+                { icon: "📣", t: "Ads", d: "Draft Google/Facebook ads + open Ads Manager & walk you through posting" },
                 { icon: "🤝", t: "Landlord outreach", d: "Draft + one-tap WhatsApp/email to chase deals" },
                 { icon: "📄", t: "Documents", d: "Proposals, letters, contracts, summaries" },
-                { icon: "🔎", t: "Research", d: "Areas, competitors, market — done fast" },
+                { icon: "🔎", t: "Research", d: "Areas, competitors, market, anything — done fast" },
               ].map((c) => (
                 <div key={c.t} className="bg-white/5 border border-white/10 rounded-xl px-3 py-2.5">
                   <div className="text-sm font-semibold text-emerald-200">{c.icon} {c.t}</div>
