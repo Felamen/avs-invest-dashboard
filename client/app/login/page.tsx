@@ -4,11 +4,6 @@ import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useAuth } from "@/lib/auth";
 import LoginBackground from "@/components/LoginBackground";
-import {
-  membersForBusinessLogin,
-  orgLabel,
-  type TeamMember,
-} from "@/lib/teamData";
 
 export default function BusinessLoginPage() {
   const router = useRouter();
@@ -23,9 +18,6 @@ export default function BusinessLoginPage() {
   const [ownerHubUrl, setOwnerHubUrl] = useState<string | null>(null);
   const [redirectStatus, setRedirectStatus] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
-
-  // Only AVS team accounts that are set up to sign in here.
-  const availableUsers = membersForBusinessLogin().filter((m) => m.org === "AVS");
 
   useEffect(() => {
     // Skip auto-redirect when previewing (e.g. /login?preview=1) so the page
@@ -56,13 +48,6 @@ export default function BusinessLoginPage() {
     }
     setRedirectStatus("Routing you to your business dashboard…");
     window.location.href = result.redirectTo;
-  }
-
-  function quickFill(member: TeamMember) {
-    setEmail(member.email);
-    setError(null);
-    setOwnerHubUrl(null);
-    setRedirectStatus(null);
   }
 
   return (
@@ -242,46 +227,8 @@ export default function BusinessLoginPage() {
             </form>
 
             <div className="pt-4 border-t border-white/10">
-              <div className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">
-                AVS team (click to fill your email)
-              </div>
-              <div className="space-y-1">
-                {availableUsers.map((m) => (
-                  <button
-                    key={m.id}
-                    type="button"
-                    onClick={() => quickFill(m)}
-                    className="w-full text-left px-3 py-2 rounded-md hover:bg-white/10 border border-white/5 text-xs flex items-center gap-3 transition-colors"
-                  >
-                    <div
-                      className={`w-7 h-7 rounded-full flex items-center justify-center text-slate-900 text-[10px] font-semibold shrink-0 ${
-                        m.org === "AVS"
-                          ? "bg-gradient-to-br from-emerald-400 to-teal-500"
-                          : "bg-gradient-to-br from-cyan-400 to-blue-500"
-                      }`}
-                    >
-                      {m.initials}
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="font-medium text-white truncate">{m.name}</div>
-                      <div className="text-[10px] text-slate-400 truncate">
-                        {m.email} · {m.role} · {orgLabel[m.org]}
-                      </div>
-                    </div>
-                    <span
-                      className={`text-[9px] uppercase tracking-wider font-bold px-1.5 py-0.5 rounded ${
-                        m.org === "AVS"
-                          ? "bg-emerald-500/20 text-emerald-300"
-                          : "bg-cyan-500/20 text-cyan-300"
-                      }`}
-                    >
-                      {m.org}
-                    </span>
-                  </button>
-                ))}
-              </div>
-              <div className="text-[10px] text-slate-500 mt-2 px-1">
-                Use your own password. Forgot it? Ask the owner to reset it.
+              <div className="text-[10px] text-slate-500 px-1">
+                Sign in with your AVS work email. Forgot your password? Ask the owner to reset it.
               </div>
             </div>
           </div>
