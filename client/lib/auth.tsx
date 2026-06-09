@@ -13,8 +13,10 @@ const API_URL =
   process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, "") || "http://localhost:5001";
 
 const TOKEN_KEY = "avs-auth-token";
-const OWNER_HUB_URL = "http://localhost:3002/login";
-const VERTEX_URL = "http://localhost:3001";
+const OWNER_HUB_URL =
+  (process.env.NEXT_PUBLIC_OWNER_HUB_URL?.replace(/\/$/, "") || "http://localhost:3002") + "/login";
+const VERTEX_URL =
+  process.env.NEXT_PUBLIC_VERTEX_URL?.replace(/\/$/, "") || "http://localhost:3001";
 
 // The authenticated user as returned by the server (source of truth).
 export type AuthUser = {

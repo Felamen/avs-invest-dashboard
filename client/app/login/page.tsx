@@ -5,6 +5,9 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useAuth } from "@/lib/auth";
 import LoginBackground from "@/components/LoginBackground";
 
+const OWNER_HUB_URL =
+  (process.env.NEXT_PUBLIC_OWNER_HUB_URL?.replace(/\/$/, "") || "http://localhost:3002") + "/login";
+
 export default function BusinessLoginPage() {
   const router = useRouter();
   const params = useSearchParams();
@@ -144,7 +147,7 @@ export default function BusinessLoginPage() {
             </div>
 
             <a
-              href="http://localhost:3002/login"
+              href={OWNER_HUB_URL}
               className="flex items-center gap-3 px-3 py-2.5 rounded-xl border border-purple-500/40 bg-gradient-to-br from-purple-500/15 to-pink-500/15 hover:from-purple-500/25 hover:to-pink-500/25 transition-all group"
             >
               <span className="w-9 h-9 rounded-lg bg-gradient-to-br from-purple-400 to-pink-500 flex items-center justify-center font-black text-slate-900 text-base">
